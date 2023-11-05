@@ -49,4 +49,3 @@ def on_release(key):
 exit = 0
 with Listener(on_press=on_press, on_release=on_release) as listener:
     listener.join()
-
