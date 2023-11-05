@@ -27,7 +27,7 @@ pipeline {
             }
             failure 
             {
-                mail to: yuval006@gmail.com, subject: 'The Pipeline failed :('
+                // mail to: yuval006@gmail.com, subject: 'The Pipeline failed :('
             }
             always {
                 sh 'echo build ended, deleting all resources...'
