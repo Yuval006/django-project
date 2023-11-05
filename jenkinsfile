@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                sh 'chmod +x init.sh'
+                sh './init.sh'
+            }
+        }
+        stage('Test') {
+            steps {
+                docker exec -it app python manage.py test
+                sh 'echo $(curl app:8000)'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+        post {
+            success
+            {
+                sh 'version=$(git log -n 1 --format="%s" HEAD)'
+                docker push me-west1-docker.pkg.dev/django-project-test-404011/django-yuval/app:$version
+            }
+            failure 
+            {
+                mail to: yuval006@gmail.com, subject: 'The Pipeline failed :('
+            }
+            always {
+                sh 'echo build ended, deleting all resources...'
+                sh 'chmod +x ./delete.sh'
+                sh './delete.sh'
+                rm -rf .
+            }
+            
+          
+        }
+    }
+}

@@ -45,7 +45,7 @@ This project was done by me as a assignment for an internship.
 
 <b>The Secret_Key required for the execution and debugging of project is not removed from the project code. So you can use the project as your college mini-project or by using the project code you can build your own project.</b>
 
-<h2>Usage :</h2>
+<h2>Usage:</h2>
 
     python django_web_app/manage.py makemigrations
 
@@ -55,6 +55,8 @@ This project was done by me as a assignment for an internship.
     
    In your web browser enter the address : http://localhost:8000 or http://127.0.0.1:8000/
 
+
+<h2>In order to Test:</h2>
 # Working:
 [![Watch the video](https://img.youtube.com/vi/qIK-vfTig6c/0.jpg)](https://youtu.be/qIK-vfTig6c)
 
