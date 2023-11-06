@@ -11,7 +11,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'docker exec app python manage.py test'
-                sh "curl -o /dev/null -u myself:XXXXXX -Isw '%{http_code}\n' http://10.208.0.15:8000"
+                sh "curl 10.208.0.15:8000"
             }
         }
 
