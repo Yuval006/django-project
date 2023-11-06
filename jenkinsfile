@@ -26,6 +26,8 @@ pipeline {
     }
     post {
         success {
+            sh "source '/google-cloud-sdk/path.bash.inc'"
+            sh "source '/google-cloud-sdk/completion.bash.inc'"
             sh 'gcloud auth configure-docker me-west1-docker.pkg.dev'
             sh 'version=$(git log -n 1 --format="%s" HEAD)'
             sh 'echo $(git log -n 1 --format="%s" HEAD)'
