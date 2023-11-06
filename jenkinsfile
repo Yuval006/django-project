@@ -4,13 +4,14 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                git '…' // checks out Dockerfile & Makefile
+                node('master')
+                {git '…' // checks out Dockerfile & Makefile
                 def newapp = docker.build 'app:1.0'
                 newapp.inside {
                 sh 'python manage.py test'
                 }
                 sh "echo all worked"
-                sh 'ls'
+                sh 'ls'}
             }
         }
     //     stage('Test') {
