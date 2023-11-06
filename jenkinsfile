@@ -11,6 +11,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'docker exec app python manage.py test'
+                sh 'sleep 4'
                 sh "curl 10.208.0.15:8000"
                 sh 'status=$?'
                 echo '$status'
@@ -29,6 +30,7 @@ pipeline {
             sh 'echo $(git log -n 1 --format="%s" HEAD)'
             sh 'chmod +x deploy.sh'
             sh './deploy.sh $(git log -n 1 --format="%s" HEAD)'
+            sh 'rm -rf *'
         }
         // failure {
         //     // mail to: yuval006@gmail.com, subject: 'The Pipeline failed :('
