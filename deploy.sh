@@ -18,6 +18,9 @@ if [ $? -eq 0 ]
 then 
     echo
     echo "Build Succeeded/Exists"
+    source '/google-cloud-sdk/path.bash.inc'
+    source '/google-cloud-sdk/completion.bash.inc'
+    gcloud auth configure-docker me-west1-docker.pkg.dev
     docker push me-west1-docker.pkg.dev/django-project-test-404011/django-yuval/app:$VERSION
 else
     echo "Error: Build failed, Fix Dockerfile and try again"
