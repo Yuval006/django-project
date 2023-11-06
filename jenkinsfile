@@ -10,9 +10,9 @@ pipeline {
         }
         stage('Test') {
             steps {
+                sh 'docker exec app python manage.py test'
+                sh 'curl 10.208.0.15:8000 &> /dev/null'
                 script{
-                    docker exec app python manage.py test
-                    curl "10.208.0.15:8000" &> /dev/null
                     def status = sh(returnStdout: true, script: '$?')
                     echo "${status}"
                 }
