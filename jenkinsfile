@@ -6,7 +6,7 @@ pipeline {
             steps {
                 git '…' // checks out Dockerfile & Makefile
                 def newapp = docker.build 'app:1.0'
-                myEnv.inside {
+                newapp.inside {
                 sh 'python manage.py test'
                 }
                 sh "echo all worked"
