@@ -20,6 +20,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
+                shjfkl
                 echo 'Deploying....'
             }
         }
@@ -32,9 +33,9 @@ pipeline {
             sh './deploy.sh $(git log -n 1 --format="%s" HEAD)'
             sh 'rm -rf *'
         }
-        // failure {
-        //     // mail to: yuval006@gmail.com, subject: 'The Pipeline failed :('
-        // }
+        failure {
+            mail to: yuval006@gmail.com, subject: 'The Pipeline failed :('
+        }
         always {
             sh 'echo build ended, deleting all resources...'
             sh 'chmod +x ./delete.sh'
