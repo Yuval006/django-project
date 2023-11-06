@@ -12,16 +12,17 @@ pipeline {
             steps {
                 script {
                     docker exec app python manage.py test
-                     def response = sh(script: 'docker run app curl -s -o /dev/null -w "%{http_code}" http://10.208.0.15:8000', returnStatus: true)
-                        if (response == 200) {
-                            currentBuild.result = 'SUCCESS'
-                        } else {
-                            currentBuild.result = 'FAILURE'
-                        }
+                    def response = sh(script: 'docker run app curl -s -o /dev/null -w "%{http_code}" http://10.208.0.15:8000', returnStatus: true)
+                    if (response == 200) {
+                        currentBuild.result = 'SUCCESS'
+                    } else {
+                        currentBuild.result = 'FAILURE'
+                    }
                     docker ps -a
                 }
             }
         }
+
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
@@ -36,11 +37,11 @@ pipeline {
         // failure {
         //     // mail to: yuval006@gmail.com, subject: 'The Pipeline failed :('
         // }
-        // always {
-        //     sh 'echo build ended, deleting all resources...'
-        //     sh 'chmod +x ./delete.sh'
-        //     sh './delete.sh'
-        //     sh 'rm -rf .'
-        // }
+        always {
+            sh 'echo build ended, deleting all resources...'
+            sh 'chmod +x ./delete.sh'
+            sh './delete.sh'
+            sh 'rm -rf .'
+        }
     }
 }
