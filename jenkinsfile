@@ -4,46 +4,34 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                node('master')
-                {git '…' // checks out Dockerfile & Makefile
-                def newapp = docker.build 'app:1.0'
-                newapp.inside {
-                sh 'python manage.py test'
-                }
-                sh "echo all worked"
-                sh 'ls'}
+                sh 'chmod +x init.sh'
+                sh './init.sh'
             }
         }
-    //     stage('Test') {
-    //         steps {
-    //             script {
-    //                 // Run the test command inside a Docker container
-    //                 docker.image('your-docker-image-name:tag').inside {
-    //                     sh 'python manage.py test'
-    //                 }
-    //             }
-    //             sh 'echo $(curl app:8000)'
-    //         }
-    //     }
-    //     stage('Deploy') {
-    //         steps {
-    //             echo 'Deploying....'
-    //         }
-    //     }
-    // }
-    // post {
-    //     success {
-    //         // sh 'version=$(git log -n 1 --format="%s" HEAD)'
-    //         // docker push me-west1-docker.pkg.dev/django-project-test-404011/django-yuval/app:1.0.2
-    //     }
-    //     failure {
-    //         // mail to: yuval006@gmail.com, subject: 'The Pipeline failed :('
-    //     }
-    //     always {
-    //         sh 'echo build ended, deleting all resources...'
-    //         sh 'chmod +x ./delete.sh'
-    //         sh './delete.sh'
-    //         sh 'rm -rf .'
-    //     }
-     }
+        stage('Test') {
+            steps {
+                sh 'echo $(curl app:8000)'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+    }
+    post {
+        success {
+            // sh 'version=$(git log -n 1 --format="%s" HEAD)'
+            // docker push me-west1-docker.pkg.dev/django-project-test-404011/django-yuval/app:1.0.2
+        }
+        failure {
+            // mail to: yuval006@gmail.com, subject: 'The Pipeline failed :('
+        }
+        always {
+            sh 'echo build ended, deleting all resources...'
+            sh 'chmod +x ./delete.sh'
+            sh './delete.sh'
+            sh 'rm -rf .'
+        }
+    }
 }
