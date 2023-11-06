@@ -11,15 +11,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'docker exec app python manage.py test'
-                sh "def response = sh(script: 'docker run app curl -s -o /dev/null -w "%{http_code}" http://10.208.0.15:8000', returnStatus: true)"
-                script {
-                    if (response == 200) {
-                        currentBuild.result = 'SUCCESS'
-                    } else {
-                        currentBuild.result = 'FAILURE'
-                    }
-                    docker ps -a
-                }
+                sh "curl -o /dev/null -u myself:XXXXXX -Isw '%{http_code}\n' http://10.208.0.15:8000"
             }
         }
 
