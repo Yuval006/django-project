@@ -11,14 +11,14 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                docker exec app python manage.py test
-                 def response = sh(script: 'docker run app curl -s -o /dev/null -w "%{http_code}" http://localhost:8000', returnStatus: true)
-                    if (response == 200) {
-                        currentBuild.result = 'SUCCESS'
-                    } else {
-                        currentBuild.result = 'FAILURE'
-                    }
-                docker ps -a
+                    docker exec app python manage.py test
+                     def response = sh(script: 'docker run app curl -s -o /dev/null -w "%{http_code}" http://10.208.0.15:8000', returnStatus: true)
+                        if (response == 200) {
+                            currentBuild.result = 'SUCCESS'
+                        } else {
+                            currentBuild.result = 'FAILURE'
+                        }
+                    docker ps -a
                 }
             }
         }
