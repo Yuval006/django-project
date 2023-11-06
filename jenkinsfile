@@ -10,8 +10,12 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'docker exec app python manage.py test'
-                sh "curl 10.208.0.15:8000"
+                script{
+                    docker exec app python manage.py test
+                    curl 10.208.0.15:8000 &> /dev/null
+                    def status = sh(returnStdout: true, script: '$?')
+                    echo "${status}"
+                }
             }
         }
 
@@ -24,16 +28,17 @@ pipeline {
     post {
         success {
             sh 'version=$(git log -n 1 --format="%s" HEAD)'
-            sh 'docker push me-west1-docker.pkg.dev/django-project-test-404011/django-yuval/app:1.0.2'
+            sh 'chmod +x deploy.sh'
+            sh './deploy.sh'
         }
         // failure {
         //     // mail to: yuval006@gmail.com, subject: 'The Pipeline failed :('
         // }
-        // always {
-        //     sh 'echo build ended, deleting all resources...'
-        //     sh 'chmod +x ./delete.sh'
-        //     sh './delete.sh'
-        //     sh 'rm -rf *'
-        // }
+        always {
+            sh 'echo build ended, deleting all resources...'
+            sh 'chmod +x ./delete.sh'
+            sh './delete.sh'
+            sh 'rm -rf *'
+        }
     }
 }
