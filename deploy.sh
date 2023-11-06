@@ -39,7 +39,7 @@ fi
 
 if [ $choice = 0 ]
 then
-    ./delete $VERSION  &> /dev/null
+    docker rmi me-west1-docker.pkg.dev/django-project-test-404011/django-yuval/app:$1
     docker build -t me-west1-docker.pkg.dev/django-project-test-404011/django-yuval/app:$VERSION .
 fi
 # Error handling: Checks if build is completed succefuly
