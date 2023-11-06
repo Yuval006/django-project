@@ -11,7 +11,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'docker exec app python manage.py test'
-                sh 'echo $(curl app:8000)'
+                sh 'echo $(curl 127.0.0.1:8000)'
                 sh 'docker ps -a'
             }
         }
