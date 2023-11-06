@@ -26,8 +26,6 @@ pipeline {
     }
     post {
         success {
-            sh 'chmod +x gcloud.sh'
-            sh './gcloud.sh'
             sh 'version=$(git log -n 1 --format="%s" HEAD)'
             sh 'echo $(git log -n 1 --format="%s" HEAD)'
             sh 'chmod +x deploy.sh'
