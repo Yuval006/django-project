@@ -27,7 +27,7 @@ pipeline {
         success {
             sh 'version=$(git log -n 1 --format="%s" HEAD)'
             sh 'chmod +x deploy.sh'
-            sh './deploy.sh'
+            sh './deploy.sh $version'
         }
         // failure {
         //     // mail to: yuval006@gmail.com, subject: 'The Pipeline failed :('
@@ -36,7 +36,7 @@ pipeline {
             sh 'echo build ended, deleting all resources...'
             sh 'chmod +x ./delete.sh'
             sh './delete.sh'
-            // sh 'rm -rf *'
+            sh 'rm -rf *'
         }
     }
 }
