@@ -34,7 +34,7 @@ pipeline {
             sh 'rm -rf *'
         }
         failure {
-            mail to: yuval006@gmail.com, subject: 'The Pipeline failed :('
+            echo 'The Pipeline failed :('
         }
         always {
             sh 'echo build ended, deleting all resources...'
