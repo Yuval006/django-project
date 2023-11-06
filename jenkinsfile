@@ -26,9 +26,9 @@ pipeline {
     post {
         success {
             sh 'version=$(git log -n 1 --format="%s" HEAD)'
-            sh 'echo $version'
+            sh 'echo $(git log -n 1 --format="%s" HEAD)'
             sh 'chmod +x deploy.sh'
-            sh './deploy.sh $version'
+            sh './deploy.sh $(git log -n 1 --format="%s" HEAD)'
         }
         // failure {
         //     // mail to: yuval006@gmail.com, subject: 'The Pipeline failed :('
