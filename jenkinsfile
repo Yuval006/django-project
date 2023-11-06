@@ -10,6 +10,7 @@ pipeline {
         }
         stage('Test') {
             steps {
+                sh 'docker exec -it app python manage.py test'
                 sh 'echo $(curl app:8000)'
             }
         }
@@ -20,10 +21,10 @@ pipeline {
         }
     }
     post {
-        // success {
-        //     // sh 'version=$(git log -n 1 --format="%s" HEAD)'
-        //     // docker push me-west1-docker.pkg.dev/django-project-test-404011/django-yuval/app:1.0.2
-        // }
+        success {
+            sh 'version=$(git log -n 1 --format="%s" HEAD)'
+            sh 'docker push me-west1-docker.pkg.dev/django-project-test-404011/django-yuval/app:1.0.2'
+        }
         // failure {
         //     // mail to: yuval006@gmail.com, subject: 'The Pipeline failed :('
         // }
